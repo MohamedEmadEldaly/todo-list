@@ -6,11 +6,12 @@ import {
   transferArrayItem,
   CdkDrag,
   CdkDropList,
+  CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
 import { Todo } from '../shared/models/todos.model';
 @Component({
   selector: 'app-todos',
-  imports: [CdkDropList, CdkDrag],
+  imports: [CdkDropList, CdkDrag,CdkDropListGroup],
   templateUrl: './todos.html',
   styleUrl: './todos.scss'
 })

@@ -1,39 +1,33 @@
-<div class="example-container">
-  <h2>To do</h2>
+<div cdkDropListGroup>
+  <div class="example-container">
+    <h2>To do</h2>
 
-  <div
-    cdkDropList
-    id="todoList"
-    #todoList="cdkDropList"
-    [cdkDropListData]="todosService.todosListGrouped()['false']"
-    [cdkDropListConnectedTo]="[todosService.todosListGrouped()['true']]"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    @for (item of todosService.todosListGrouped()['false']; track item?.id) {
-    <div class="example-box" cdkDrag>{{ item?.todo }}</div>
-    }
+    <div
+      cdkDropList
+      id="todoList"
+      [cdkDropListData]="todosService.todosListGrouped()?.['false']"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of todosService.todosListGrouped()['false']; track item?.id) {
+      <div class="example-box" cdkDrag>{{ item?.todo }}</div>
+      }
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2>Done</h2>
+
+    <div
+      cdkDropList
+      id="doneList"
+      [cdkDropListData]="todosService.todosListGrouped()['true']"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of todosService.todosListGrouped()['true']; track item?.id) {
+      <div class="example-box" cdkDrag>{{ item?.todo }}</div>
+      }
+    </div>
   </div>
 </div>
-
-<div class="example-container">
-  <h2>Done</h2>
-
-  <div
-    cdkDropList
-    id="doneList"
-    #doneList="cdkDropList"
-    [cdkDropListData]="todosService.todosListGrouped()['true']"
-    [cdkDropListConnectedTo]="[todosService.todosListGrouped()['false']]"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    @for (item of todosService.todosListGrouped()['true']; track item?.id) {
-    <div class="example-box" cdkDrag>{{ item?.todo }}</div>
-    }
-  </div>
-</div>
-
-<!-- Copyright 2025 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at https://angular.io/license -->
