@@ -12,6 +12,8 @@ export class AuthService {
   // signals
   accessToken = signal<string | null | undefined>(sessionStorage.getItem('access_token'));
   refreshToken = signal<string | null | undefined>(sessionStorage.getItem('refresh_token'));
+  user = signal<loginResponse>(JSON.parse(<string>sessionStorage.getItem('user')));
+
 
   // Derived signal to check login status
   isAuthenticated = computed(() => !!this.accessToken());
@@ -20,10 +22,12 @@ export class AuthService {
     effect(() => {
       const access = this.accessToken();
       const refresh = this.refreshToken();
+      const user = this.user();
       if (access) sessionStorage.setItem('access_token', access);
       else sessionStorage.removeItem('access_token');
       if (refresh) sessionStorage.setItem('refresh_token', refresh);
       else sessionStorage.removeItem('refresh_token');
+      if(user) sessionStorage.setItem('user', JSON.stringify(user))
     });
   }
 
@@ -33,6 +37,7 @@ export class AuthService {
       tap((response: loginResponse) => {
         this.accessToken.set(response.accessToken);
         this.refreshToken.set(response.refreshToken);
+        this.user.set(response)
       })
     );
   }

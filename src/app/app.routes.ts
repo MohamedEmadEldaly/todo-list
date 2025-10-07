@@ -4,11 +4,12 @@ import { authRoutes } from './auth/auth.routes';
 import { Todos } from './todos/todos';
 import { authGaurdGuard } from './shared/gaurds/auth-gaurd-guard';
 import { guestGaurdGuard } from './shared/gaurds/guest-gaurd-guard';
+import { todosRoutes } from './todos/todos.routes';
 
 export const routes: Routes = [
   {
     path: 'todos',
-    component: Todos,
+    children: todosRoutes,
     canActivate : [authGaurdGuard]
   },
   {

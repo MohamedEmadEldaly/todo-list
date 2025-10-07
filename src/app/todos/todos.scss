@@ -55,3 +55,38 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
   
+  .center-loader{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .app-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f2f2f3;
+    align-items: center;
+
+    &__heading{
+      margin: 0;
+      padding: 0;
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .app-container{
+    padding: 25px;
+  }
+
+  .actions{
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 10px; 
+  }

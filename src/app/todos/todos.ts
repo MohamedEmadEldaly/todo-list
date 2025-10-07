@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TodosService } from '../shared/services/todos-service';
 import {
   CdkDragDrop,
@@ -9,20 +9,37 @@ import {
   CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
 import { Todo } from '../shared/models/todos.model';
+import { Subject, takeUntil } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { AuthService } from '../shared/services/auth';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 @Component({
   selector: 'app-todos',
-  imports: [CdkDropList, CdkDrag,CdkDropListGroup],
+  imports: [CdkDropList, CdkDrag, CdkDropListGroup,MatProgressSpinnerModule,MatToolbarModule,MatIconModule,MatButtonModule],
   templateUrl: './todos.html',
-  styleUrl: './todos.scss'
+  styleUrl: './todos.scss',
 })
 export class Todos {
 
-  // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
 
-  // done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  _unsubscribe = new Subject();
+  todosService = inject(TodosService);
+  authService = inject(AuthService)
+  readonly dialog = inject(MatDialog);
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event)
+  drop(event: CdkDragDrop<Todo[]>) {
+    const item: Todo = event.container.data[event.currentIndex];
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -30,25 +47,28 @@ export class Todos {
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
 
       if (event.container.id === 'doneList') {
-        event.container.data[event.currentIndex];
-        console.log("hello",)
+        item.completed = true;
       } else {
-        console.log("no",event.container.data[event.currentIndex])
-        ;
+        item.completed = false;
       }
 
+      this.todosService
+        .updateTodo(item)
+        .pipe(takeUntil(this._unsubscribe))
+        .subscribe({
+          error: (err) => {
+            this.todosService.error.set(err.message || 'Something went wrong');
+            this.todosService.loading.set(false);
+          },
+        });
     }
   }
-  constructor(public todosService : TodosService){}
 
   ngOnInit(): void {
     this.todosService.getTodosList();
   }
-
-
-  
 }

@@ -1,33 +1,55 @@
-<div cdkDropListGroup>
-  <div class="example-container">
-    <h2>To do</h2>
+<div class="app-header">
+  <h2 class="app-header__heading">
+    todo App
+  </h2>
 
-    <div
-      cdkDropList
-      id="todoList"
-      [cdkDropListData]="todosService.todosListGrouped()?.['false']"
-      class="example-list"
-      (cdkDropListDropped)="drop($event)"
-    >
-      @for (item of todosService.todosListGrouped()['false']; track item?.id) {
-      <div class="example-box" cdkDrag>{{ item?.todo }}</div>
-      }
+  <span> Hello, {{authService?.user()?.firstName}} {{authService?.user()?.lastName}} - </span>
+</div>
+
+<div class="actions">
+  <button matFab extended>
+    add
+  </button>
+</div>
+
+<div class="app-container">
+  @if(todosService.loading()) {
+    <div class="center-loader">
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
     </div>
-  </div>
-
-  <div class="example-container">
-    <h2>Done</h2>
-
-    <div
-      cdkDropList
-      id="doneList"
-      [cdkDropListData]="todosService.todosListGrouped()['true']"
-      class="example-list"
-      (cdkDropListDropped)="drop($event)"
-    >
-      @for (item of todosService.todosListGrouped()['true']; track item?.id) {
-      <div class="example-box" cdkDrag>{{ item?.todo }}</div>
-      }
+    } @else {
+    <div cdkDropListGroup>
+      <div class="example-container">
+        <h2>To do</h2>
+    
+        <div
+          cdkDropList
+          id="todoList"
+          [cdkDropListData]="todosService.todosListGrouped()?.['false']"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of todosService.todosListGrouped()['false']; track item?.id) {
+          <div class="example-box" cdkDrag>{{ item?.todo }}</div>
+          }
+        </div>
+      </div>
+    
+      <div class="example-container">
+        <h2>Done</h2>
+    
+        <div
+          cdkDropList
+          id="doneList"
+          [cdkDropListData]="todosService.todosListGrouped()['true']"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of todosService.todosListGrouped()['true']; track item?.id) {
+          <div class="example-box" cdkDrag>{{ item?.todo }}</div>
+          }
+        </div>
+      </div>
     </div>
-  </div>
+    }
 </div>
