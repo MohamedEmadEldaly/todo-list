@@ -24,6 +24,9 @@ Navigate to the project directory
 
 cd todos-list
 
+using api 
+
+https://dummyjson.com/docs/todos
 
 Install dependencies
 
