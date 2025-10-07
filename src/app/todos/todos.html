@@ -1,14 +1,39 @@
-@if(todosService.loading()) {
-<div>Loading...</div>
+<div class="example-container">
+  <h2>To do</h2>
 
-} @if(todosService.error()){
-<p>Error: {{ todosService.error() }}</p>
-} @else {
-<ul>
-  @for(todo of todosService.todosList();track todo.id){
-  <li>
-    {{ todo.todo }}
-  </li>
-  }
-</ul>
-}
+  <div
+    cdkDropList
+    id="todoList"
+    #todoList="cdkDropList"
+    [cdkDropListData]="todosService.todosListGrouped()['false']"
+    [cdkDropListConnectedTo]="[todosService.todosListGrouped()['true']]"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    @for (item of todosService.todosListGrouped()['false']; track item?.id) {
+    <div class="example-box" cdkDrag>{{ item?.todo }}</div>
+    }
+  </div>
+</div>
+
+<div class="example-container">
+  <h2>Done</h2>
+
+  <div
+    cdkDropList
+    id="doneList"
+    #doneList="cdkDropList"
+    [cdkDropListData]="todosService.todosListGrouped()['true']"
+    [cdkDropListConnectedTo]="[todosService.todosListGrouped()['false']]"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    @for (item of todosService.todosListGrouped()['true']; track item?.id) {
+    <div class="example-box" cdkDrag>{{ item?.todo }}</div>
+    }
+  </div>
+</div>
+
+<!-- Copyright 2025 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->
