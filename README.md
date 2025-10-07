@@ -17,8 +17,7 @@ This project demonstrates the use of Angular Signals, HttpClient, and Angular Ma
 ## 📦 Installation
 
 1. **Clone the repository**
-   ```bash
-git clone https://github.com/<your-username>/todos-list.git
+git clone git@github.com:MohamedEmadEldaly/todo-list.git
 
 
 Navigate to the project directory
