@@ -14,6 +14,7 @@ export const routes: Routes = [
   {
     path: 'auth',
     children: authRoutes,
+    canActivate : [guestGaurdGuard]
   },
   {
     path : '',

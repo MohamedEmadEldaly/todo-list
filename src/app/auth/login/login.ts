@@ -45,7 +45,7 @@ export class Login implements OnDestroy {
         })
         .subscribe({
           next: () => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/todos']);
           },
           error: (error) => {
             this.loginError.set(error?.message);

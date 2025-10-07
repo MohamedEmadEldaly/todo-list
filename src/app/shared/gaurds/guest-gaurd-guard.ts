@@ -8,7 +8,6 @@ export const guestGaurdGuard: CanActivateFn = (route, state) => {
   const accessToken = authService.accessToken();
 
   if(!accessToken){
-    router.navigate(['/auth'])
     return true;
   } else {
     router.navigate(['/todos'])
